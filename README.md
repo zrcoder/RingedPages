@@ -11,7 +11,7 @@ Usage:
 ---
 If in a UIViewController
 ```
-lazy var pages: RingedPages = {
+    lazy var pages: RingedPages = {
         let screenWidth = UIScreen.main.bounds.size.width
         let pagesFrame = CGRect(x: 0, y: 100, width: screenWidth, height: screenWidth * 0.4)
         let pages = RingedPages(frame: pagesFrame)
@@ -34,14 +34,14 @@ lazy var pages: RingedPages = {
         
 ```
 ```
-override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(pages)
         pages.reloadData()
     }
 ```
 ```
-func numberOfItems(in ringedPages: RingedPages) -> Int {
+    func numberOfItems(in ringedPages: RingedPages) -> Int {
         return dataSource.count
     }
     func ringedPages(_ pages: RingedPages, viewForItemAt index: Int) -> UIView {
