@@ -1,5 +1,6 @@
 # RingedPages
 Pages in a ring!<br>
+---
 You can set auto scroll time, and custom the pageControl appearance.<br>
 In fact, there are 2 main class: PagesCarousel and ImagePageControl, you can use them independently.<br>
 RinedPages is a warapper of the above 2. It's a containner of a PagesCarousel and a ImagePageControl.
