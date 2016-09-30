@@ -34,20 +34,20 @@ open class PagesCarousel: UIView, UIScrollViewDelegate {
     }
     open func reloadData() {
         needsReload = true
-        addGestureRecognizer(tapGestureRecognizer)
-        if scrollViewContainner.superview == nil {
-            scrollViewContainner.frame = bounds
-            addSubview(scrollViewContainner)
-        }
-        if scrollView.superview == nil {
-            scrollView.frame = bounds
-            scrollViewContainner.addSubview(scrollView)
-        }
         for view in scrollView.subviews {
             view.removeFromSuperview()
         }
         removeTimer()
         setNeedsLayout()
+    }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        p_setUp()
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        p_setUp()
     }
     open func dequeueReusablePage() -> UIView? {
         let page = reusablePages.last
@@ -118,17 +118,13 @@ open class PagesCarousel: UIView, UIScrollViewDelegate {
     fileprivate var visibleRange = NSRange(location: 0, length: 0)
     fileprivate var pages = [UIView?]()
     fileprivate var reusablePages = [UIView]()
-    fileprivate lazy var tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(p_pagesTapedAction))
     fileprivate var timer: Timer?
     fileprivate var indexForTimer = 0
-    fileprivate lazy var scrollViewContainner: UIView = {
-        let containner = UIView()
-        containner.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        return containner
-    }()
+    
     deinit {
         timer?.invalidate()
     }
+    
 }
 
 public extension  PagesCarousel {
@@ -178,9 +174,22 @@ public extension  PagesCarousel {
 }
 
 fileprivate extension PagesCarousel {
-    @objc func p_pagesTapedAction() {
-        delegate?.didSelectedCurrentPage?(in: self)
+    func p_setUp() {
+        let scrollViewContainner = UIView(frame: bounds)
+        scrollViewContainner.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        scrollView.frame = bounds
+        scrollViewContainner.addSubview(scrollView)
+        addSubview(scrollViewContainner)
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(pagesTapedAction(_:)))
+        addGestureRecognizer(tapGestureRecognizer)
     }
+    
+    @objc func pagesTapedAction(_ sender : UITapGestureRecognizer) {
+        if sender.state == .ended {
+            delegate?.didSelectedCurrentPage?(in: self)
+        }
+    }
+    
     func addTimer() {
         if orginPageCount > 1 && autoScrollInterval > 0 {
             timer = Timer.scheduledTimer(timeInterval: autoScrollInterval, target: self, selector: #selector(autoScrollToNextPage), userInfo: nil, repeats: true)
