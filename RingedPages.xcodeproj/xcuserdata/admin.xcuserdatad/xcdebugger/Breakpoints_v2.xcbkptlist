@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Source/RingedPages.swift"
-            timestampString = "496813254.009914"
+            filePath = "Source/PagesCarousel.swift"
+            timestampString = "496837357.857056"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
-            landmarkName = "didSelectedCurrentPage(in:)"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
+            landmarkName = "p_pagesTapedAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

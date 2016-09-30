@@ -62,6 +62,10 @@ class ViewController: UIViewController, RingedPagesDataSource, RingedPagesDelega
     func didSelectedCurrentPage(in pages: RingedPages) {
         print("pages selected, the current index is \(pages.currentIndex)")
     }
+    
+    func didScrolled(to index: Int, in pages: RingedPages) {
+        print("Did scrolled to index: \(index)")
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

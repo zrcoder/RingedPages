@@ -18,6 +18,7 @@ public protocol RingedPagesDataSource {
 }
 @objc public protocol RingedPagesDelegate {
     @objc optional func didSelectedCurrentPage(in pages: RingedPages)
+    @objc optional func didScrolled(to index: Int, in pages: RingedPages)
 }
 
 
@@ -88,10 +89,11 @@ public extension RingedPages {
         }
         return UIView()
     }
-    public func didScroll(to index: Int, in carousel: PagesCarousel) {
+    public func didScrolled(to index: Int, in carousel: PagesCarousel) {
         if pageControl.currentIndex != index {
             pageControl.currentIndex = index
         }
+        delegate?.didScrolled?(to: index, in: self)
     }
     public func didSelectedCurrentPage(in carousel: PagesCarousel) {
         delegate?.didSelectedCurrentPage?(in: self)

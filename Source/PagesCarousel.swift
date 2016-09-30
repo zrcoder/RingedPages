@@ -14,7 +14,7 @@ public protocol PagesCarouselDataSource {
 }
 
 @objc public protocol PagesCarouselDelegate {
-    @objc optional func didScroll(to index: Int, in carousel: PagesCarousel)
+    @objc optional func didScrolled(to index: Int, in carousel: PagesCarousel)
     @objc optional func didSelectedCurrentPage(in carousel: PagesCarousel)
 }
 
@@ -156,7 +156,7 @@ public extension  PagesCarousel {
         setPages(at: scrollView.contentOffset)
         refreshVisiblePageAppearance()
         if p_currentIndex != pageIndex {
-            delegate?.didScroll?(to: pageIndex, in: self)
+            delegate?.didScrolled?(to: pageIndex, in: self)
         }
         p_currentIndex = pageIndex
     }
@@ -178,7 +178,7 @@ public extension  PagesCarousel {
 }
 
 fileprivate extension PagesCarousel {
-    @objc func p_pagesTapedAction(_ tapGestureRecognizer: UITapGestureRecognizer) {
+    @objc func p_pagesTapedAction() {
         delegate?.didSelectedCurrentPage?(in: self)
     }
     func addTimer() {
