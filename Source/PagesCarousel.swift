@@ -133,7 +133,8 @@ public extension  PagesCarousel {
             return
         }
         let number = scrollView.contentOffset.x / mainPageSize.width
-        var pageIndex = Int(floor(number)) % orginPageCount
+        var pageIndex =  Int(floor(number)) % orginPageCount
+        
         if orginPageCount > 1 {
             if number >= CGFloat(2 * orginPageCount) {
                 let point = CGPoint(x: mainPageSize.width * CGFloat(orginPageCount), y: 0)
@@ -234,9 +235,7 @@ fileprivate extension PagesCarousel {
         }
     }
     func refreshVisiblePageAppearance() {
-        guard pageScale < 1 && pageScale >= 0 else {
-            return
-        }
+        guard pageScale < 1 && pageScale >= 0 else { return }
         let offset = scrollView.contentOffset.x
         for i in visibleRange.location..<visibleRange.location + visibleRange.length {
             if let page = pages[i] {
