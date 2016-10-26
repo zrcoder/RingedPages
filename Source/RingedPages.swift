@@ -35,7 +35,7 @@ open class RingedPages: UIView, PagesCarouselDataSource, PagesCarouselDelegate {
         }
     }
     
-    /// Carousel - mian view
+    /// Carousel - main view
     open var carousel: PagesCarousel {
         get {
             return m_carousel
