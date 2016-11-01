@@ -58,10 +58,10 @@ class ViewController: UIViewController, RingedPagesDataSource, RingedPagesDelega
         return label!
     }
     
-    func didSelectedCurrentPage(in pages: RingedPages) {
+    func didSelectCurrentPage(in pages: RingedPages) {
         print("pages selected, the current index is \(pages.currentIndex)")
     }
-    func didScrolled(to index: Int, in pages: RingedPages) {
+    func ringedPages(_ pages: RingedPages, didScrollTo index: Int) {
         print("Did scrolled to index: \(index)")
     }
 

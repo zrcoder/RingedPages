@@ -13,9 +13,13 @@ public protocol PagesCarouselDataSource {
     func carousel(_ carousel: PagesCarousel, pageForItemAt index: Int) -> UIView
 }
 
-@objc public protocol PagesCarouselDelegate {
-    @objc optional func didScrolled(to index: Int, in carousel: PagesCarousel)
-    @objc optional func didSelectedCurrentPage(in carousel: PagesCarousel)
+public protocol PagesCarouselDelegate {
+    func carousel(_ carousel: PagesCarousel, didScrollTo index: Int)
+    func didSelectCurrentPage(in carousel: PagesCarousel)
+}
+public extension PagesCarouselDelegate {
+    func carousel(_ carousel: PagesCarousel, didScrollTo index: Int) {}
+    func didSelectCurrentPage(in carousel: PagesCarousel) {}
 }
 
 
@@ -153,7 +157,7 @@ public extension  PagesCarousel {
         setPages(at: scrollView.contentOffset)
         refreshVisiblePageAppearance()
         if p_currentIndex != pageIndex {
-            delegate?.didScrolled?(to: pageIndex, in: self)
+            delegate?.carousel(self, didScrollTo: pageIndex)
         }
         p_currentIndex = pageIndex
     }
@@ -187,7 +191,7 @@ fileprivate extension PagesCarousel {
     
     @objc func pagesTapedAction(_ sender : UITapGestureRecognizer) {
         if sender.state == .ended {
-            delegate?.didSelectedCurrentPage?(in: self)
+            delegate?.didSelectCurrentPage(in: self)
         }
     }
     

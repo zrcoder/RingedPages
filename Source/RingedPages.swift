@@ -16,13 +16,17 @@ public protocol RingedPagesDataSource {
     func numberOfItems(in ringedPages: RingedPages) -> Int
     func ringedPages(_ pages: RingedPages, viewForItemAt index: Int) -> UIView
 }
-@objc public protocol RingedPagesDelegate {
-    @objc optional func didSelectedCurrentPage(in pages: RingedPages)
-    @objc optional func didScrolled(to index: Int, in pages: RingedPages)
+public protocol RingedPagesDelegate {
+    func didSelectCurrentPage(in pages: RingedPages)
+    func ringedPages(_ pages: RingedPages, didScrollTo index: Int)
+}
+extension RingedPagesDelegate {
+    func didSelectCurrentPage(in pages: RingedPages) {}
+    func ringedPages(_ pages: RingedPages, didScrollTo index: Int) {}
 }
 
 
-open class RingedPages: UIView, PagesCarouselDataSource, PagesCarouselDelegate {
+open class RingedPages: UIView {
     /// PageControl
     open var showPageControl = true
     open var pageControlPosition = RPPageControlPositon.bellowBody
@@ -76,7 +80,7 @@ open class RingedPages: UIView, PagesCarouselDataSource, PagesCarouselDelegate {
     }()
 }
 
-public extension RingedPages {
+extension RingedPages: PagesCarouselDataSource, PagesCarouselDelegate {
     public func numberOfItems(inCarousel carousel: PagesCarousel) -> Int {
         if let number = dataSource?.numberOfItems(in: self) {
             return number
@@ -89,15 +93,15 @@ public extension RingedPages {
         }
         return UIView()
     }
-    public func didScrolled(to index: Int, in carousel: PagesCarousel) {
+    public func didSelectCurrentPage(in carousel: PagesCarousel) {
+        delegate?.didSelectCurrentPage(in: self)
+    }
+    public func carousel(_ carousel: PagesCarousel, didScrollTo index: Int) {
         if pageControl.currentIndex != index {
             pageControl.currentIndex = index
         }
-        delegate?.didScrolled?(to: index, in: self)
+        delegate?.ringedPages(self, didScrollTo: index)
     }
-    public func didSelectedCurrentPage(in carousel: PagesCarousel) {
-        delegate?.didSelectedCurrentPage?(in: self)
-    }    
 }
 
 fileprivate extension RingedPages {
