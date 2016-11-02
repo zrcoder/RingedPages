@@ -20,7 +20,7 @@ public protocol RingedPagesDelegate {
     func didSelectCurrentPage(in pages: RingedPages)
     func ringedPages(_ pages: RingedPages, didScrollTo index: Int)
 }
-extension RingedPagesDelegate {
+extension RingedPagesDelegate {// This extension makes the protocal optional~
     func didSelectCurrentPage(in pages: RingedPages) {}
     func ringedPages(_ pages: RingedPages, didScrollTo index: Int) {}
 }

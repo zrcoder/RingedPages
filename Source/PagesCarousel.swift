@@ -22,7 +22,6 @@ public extension PagesCarouselDelegate {
     func didSelectCurrentPage(in carousel: PagesCarousel) {}
 }
 
-
 open class PagesCarousel: UIView, UIScrollViewDelegate {
     open var mainPageSize = CGSize.zero
     open var pageScale: CGFloat = 1.0
