@@ -43,15 +43,6 @@ open class PagesCarousel: UIView, UIScrollViewDelegate {
         removeTimer()
         setNeedsLayout()
     }
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        p_setUp()
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        p_setUp()
-    }
     open func dequeueReusablePage() -> UIView? {
         let page = reusablePages.last
         if page != nil {
@@ -70,7 +61,15 @@ open class PagesCarousel: UIView, UIScrollViewDelegate {
             addTimer()
         }
     }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        p_setUp()
+    }
     
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        p_setUp()
+    }
     open override func layoutSubviews() {
         super.layoutSubviews()
         if needsReload {
