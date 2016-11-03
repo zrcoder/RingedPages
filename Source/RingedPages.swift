@@ -28,27 +28,27 @@ extension RingedPagesDelegate {// This extension makes the protocal optional~
 
 open class RingedPages: UIView {
     /// PageControl
-    open var showPageControl = true
-    open var pageControlPosition = RPPageControlPositon.bellowBody
-    open var pageControlHeight:CGFloat = 15
-    open var pageControlMarginTop: CGFloat = 5
-    open var pageControlMarginBottom: CGFloat = 5
-    open var pageControl: ImagePageControl {
+    public var showPageControl = true
+    public var pageControlPosition = RPPageControlPositon.bellowBody
+    public var pageControlHeight:CGFloat = 15
+    public var pageControlMarginTop: CGFloat = 5
+    public var pageControlMarginBottom: CGFloat = 5
+    public var pageControl: ImagePageControl {
         get {
             return m_pageControl
         }
     }
     
     /// Carousel - main view
-    open var carousel: PagesCarousel {
+    public var carousel: PagesCarousel {
         get {
             return m_carousel
         }
     }
     
     /// Data source and delegate
-    open var dataSource: RingedPagesDataSource?
-    open var delegate: RingedPagesDelegate?
+    public var dataSource: RingedPagesDataSource?
+    public var delegate: RingedPagesDelegate?
     
     /// Main API
     open var currentIndex: Int {

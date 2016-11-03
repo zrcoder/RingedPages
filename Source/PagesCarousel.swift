@@ -23,19 +23,19 @@ public extension PagesCarouselDelegate {
 }
 
 open class PagesCarousel: UIView, UIScrollViewDelegate {
-    open var mainPageSize = CGSize.zero
-    open var pageScale: CGFloat = 1.0
-    open var autoScrollInterval: TimeInterval = 5.0 // is <= 0, will not scroll automatically
+    public var mainPageSize = CGSize.zero
+    public var pageScale: CGFloat = 1.0
+    public var autoScrollInterval: TimeInterval = 5.0 // is <= 0, will not scroll automatically
     
-    open var dataSource: PagesCarouselDataSource?
-    open var delegate: PagesCarouselDelegate?
+    public var dataSource: PagesCarouselDataSource?
+    public var delegate: PagesCarouselDelegate?
     
-    open var currentIndex: Int {
+    public var currentIndex: Int {
         get {
             return p_currentIndex
         }
     }
-    open func reloadData() {
+    public func reloadData() {
         needsReload = true
         for view in scrollView.subviews {
             view.removeFromSuperview()
@@ -43,14 +43,14 @@ open class PagesCarousel: UIView, UIScrollViewDelegate {
         removeTimer()
         setNeedsLayout()
     }
-    open func dequeueReusablePage() -> UIView? {
+    public func dequeueReusablePage() -> UIView? {
         let page = reusablePages.last
         if page != nil {
             reusablePages.removeLast()
         }
         return page
     }
-    open func scroll(to index: Int) {
+    public func scroll(to index: Int) {
         if index < pageCount {
             removeTimer()
             indexForTimer = index + orginPageCount
@@ -61,7 +61,7 @@ open class PagesCarousel: UIView, UIScrollViewDelegate {
             addTimer()
         }
     }
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         p_setUp()
     }
@@ -160,10 +160,10 @@ public extension  PagesCarousel {
         p_currentIndex = pageIndex
     }
     
-    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         removeTimer()
     }
-    public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if orginPageCount > 1 && autoScrollInterval > 0 {
             addTimer()
             let number = Int(floor(scrollView.contentOffset.x / mainPageSize.width))
@@ -176,7 +176,7 @@ public extension  PagesCarousel {
     }
 }
 
-fileprivate extension PagesCarousel {
+private extension PagesCarousel {
     func p_setUp() {
         let scrollViewContainner = UIView(frame: bounds)
         scrollViewContainner.autoresizingMask = [.flexibleWidth, .flexibleHeight]
