@@ -23,8 +23,12 @@ public extension PagesCarouselDelegate {
 }
 
 open class PagesCarousel: UIView, UIScrollViewDelegate {
+    
+    /// The size of the center main page. Infact, if you don't set, will be the size of whole PagesCarousel.
     public var mainPageSize = CGSize.zero
+    /// When the center page is moved to left or right, it's size will change, so we use pageScale for this.
     public var pageScale: CGFloat = 1.0
+    
     public var autoScrollInterval: TimeInterval = 5.0 // is <= 0, will not scroll automatically
     
     public var dataSource: PagesCarouselDataSource?
@@ -35,6 +39,8 @@ open class PagesCarousel: UIView, UIScrollViewDelegate {
             return p_currentIndex
         }
     }
+    
+    /// Main API
     public func reloadData() {
         needsReload = true
         for view in scrollView.subviews {
@@ -43,6 +49,10 @@ open class PagesCarousel: UIView, UIScrollViewDelegate {
         removeTimer()
         setNeedsLayout()
     }
+    
+    /// To get the reusing views.
+    /// Normally, pages are the same type views, so we can use an array to stroy reusingViews, not dictionary or chache
+    /// - Returns: A view as page for reusing.
     public func dequeueReusablePage() -> UIView? {
         let page = reusablePages.last
         if page != nil {
@@ -50,6 +60,7 @@ open class PagesCarousel: UIView, UIScrollViewDelegate {
         }
         return page
     }
+    
     public func scroll(to index: Int) {
         if index < pageCount {
             removeTimer()
@@ -61,6 +72,7 @@ open class PagesCarousel: UIView, UIScrollViewDelegate {
             addTimer()
         }
     }
+    
     public override init(frame: CGRect) {
         super.init(frame: frame)
         p_setUp()
@@ -70,12 +82,15 @@ open class PagesCarousel: UIView, UIScrollViewDelegate {
         super.init(coder: aDecoder)
         p_setUp()
     }
+    
     open override func layoutSubviews() {
         super.layoutSubviews()
         if needsReload {
             orginPageCount = 0
             if let dataSource = dataSource {
                 orginPageCount = dataSource.numberOfItems(inCarousel: self)
+                
+                // * 3!!!!! for cyclely scrolling.
                 pageCount = orginPageCount == 1 ? 1 : orginPageCount * 3
             }
             reusablePages.removeAll()
@@ -131,9 +146,8 @@ open class PagesCarousel: UIView, UIScrollViewDelegate {
 
 public extension  PagesCarousel {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard orginPageCount > 0 else {
-            return
-        }
+        guard orginPageCount > 0 else { return }
+        
         let number = scrollView.contentOffset.x / mainPageSize.width
         var pageIndex =  Int(floor(number)) % orginPageCount
         

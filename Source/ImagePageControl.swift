@@ -15,8 +15,10 @@ public enum ImagePageControlVerticalAlignment: Int {
     case top, middle, bottom
 }
 
+
+/// We can only set indicatorTintColor and currentIndicatorTintColor (or do nothing) to use a pageControl like Apple's native UIPageControl, or, we can use images instead of the circles.
 open class ImagePageControl: UIControl {
-    open var numberOfPages: Int {
+    public var numberOfPages: Int {
         get {
             return p_numberOfPages
         }
@@ -34,7 +36,7 @@ open class ImagePageControl: UIControl {
             setNeedsDisplay()
         }
     }
-    open var currentIndex: Int {
+    public var currentIndex: Int {
         get {
             return p_currentIndex
         }
@@ -42,12 +44,12 @@ open class ImagePageControl: UIControl {
             setCurrentPage(newValue, sendEvent: false, canDefer: false)
         }
     }
-    open var indicatorMargin: CGFloat  = 10.0 {
+    public var indicatorMargin: CGFloat  = 10.0 {
         didSet {
             setNeedsDisplay()
         }
     }
-    open var indicatorDiameter: CGFloat = 6.0 {
+    public var indicatorDiameter: CGFloat = 6.0 {
         didSet {
             if minHeight < indicatorMargin {
                 minHeight = indicatorDiameter
@@ -56,7 +58,7 @@ open class ImagePageControl: UIControl {
             setNeedsDisplay()
         }
     }
-    open var minHeight: CGFloat = 36.0 {// cannot be less than indicatorDiameter
+    public var minHeight: CGFloat = 36.0 {// cannot be less than indicatorDiameter
         didSet {
             if minHeight < indicatorMargin {
                 indicatorDiameter = minHeight
@@ -65,22 +67,22 @@ open class ImagePageControl: UIControl {
             setNeedsLayout()
         }
     }
-    open var alignment = ImagePageControlAlignment.center
-    open var verticaleAlignment = ImagePageControlVerticalAlignment.middle
-    open var pageIndicatorImage: UIImage? {
+    public var alignment = ImagePageControlAlignment.center
+    public var verticaleAlignment = ImagePageControlVerticalAlignment.middle
+    public var pageIndicatorImage: UIImage? {
         didSet {
             updateMeasuredIndicatorSizes()
             setNeedsDisplay()
         }
     }
-    open var currentPageIndicatorImage: UIImage? {
+    public var currentPageIndicatorImage: UIImage? {
         didSet {
             updateMeasuredIndicatorSizes()
             setNeedsDisplay()
         }
     }
-    open var indicatorTintColor = UIColor.lightGray     // will be ignored if pageIndicatorImage setted
-    open var currentIndicatorTintColor = UIColor.blue   // will be ignored if currentPageIndicatorImage setted
+    public var indicatorTintColor = UIColor.lightGray     // will be ignored if pageIndicatorImage setted
+    public var currentIndicatorTintColor = UIColor.blue   // will be ignored if currentPageIndicatorImage setted
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -159,11 +161,11 @@ fileprivate extension ImagePageControl {
             } else {
                 image = pageIndicatorImage
             }
-            if let image = image {
+            if let image = image {// draw the images
                 yOffset = topOffset(forHeight: image.size.height, rect: rect)
                 let centeredXOffset = xOffset + floor((measuredIndicatorWidth - image.size.width) * 0.5)
                 image.draw(at: CGPoint(x: centeredXOffset, y: yOffset))
-            } else {
+            } else {// draw the circles
                 yOffset = topOffset(forHeight: indicatorDiameter, rect: rect)
                 let centeredXOffset = xOffset + floor((measuredIndicatorWidth - indicatorDiameter) * 0.5)
                 let indicatorRect = CGRect(x: centeredXOffset, y: yOffset, width: indicatorDiameter, height: indicatorDiameter)

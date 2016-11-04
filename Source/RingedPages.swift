@@ -51,7 +51,7 @@ open class RingedPages: UIView {
     public var delegate: RingedPagesDelegate?
     
     /// Main API
-    open var currentIndex: Int {
+    public var currentIndex: Int {
         get {
             return carousel.currentIndex
         }
