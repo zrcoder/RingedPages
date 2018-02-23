@@ -13,7 +13,7 @@ RinedPages is a warapper of the above 2.
 Usage:
 ---
 If in a UIViewController
-```
+```swift
     lazy var pages: RingedPages = {
         let screenWidth = UIScreen.main.bounds.size.width
         let pagesFrame = CGRect(x: 0, y: 100, width: screenWidth, height: screenWidth * 0.4)
@@ -36,14 +36,14 @@ If in a UIViewController
     }()
         
 ```
-```
+```swift
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(pages)
         pages.reloadData()
     }
 ```
-```
+```swift
     func numberOfItems(in ringedPages: RingedPages) -> Int {
         return dataSource.count
     }
